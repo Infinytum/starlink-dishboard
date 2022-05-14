@@ -1,0 +1,16 @@
+<div class="flex justify-center md:justify-start">
+    <div class="flex flex-col">
+        <div class="flex flex-row items-center">
+            <span class="bg-white rounded-full" style="height: 10px; width: 40px;"></span>
+            <p class="pl-2 text-white">Download</p>
+        </div>
+        <p class="text-starlink-lightgrey pt-1 text-center md:text-left" style="font-size: 14px;">24 Mbit/s</p>
+    </div>
+    <div class="flex flex-col pl-8">
+        <div class="flex flex-row items-center">
+            <span class="bg-starlink-darkgrey rounded-full" style="height: 10px; width: 40px;"></span>
+            <p class="pl-2 text-starlink-darkgrey">Upload</p>
+        </div>
+        <p class="text-starlink-lightgrey pt-1 text-center md:text-left" style="font-size: 14px;">3 Mbit/s</p>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="flex items-center">
+    <img class="md:flex-none md:pr-3" style="height: 46px" src="/assets/img/dishy.svg">
+    <div class="grow text-center md:text-left">
+        <h1 class="text-white font-medium space-5 uppercase" style="font-size: 22px;">Starlink</h1>
+        <h2 class="text-white font-light space-3" style="font-size: 22px; margin-top: -5px;">Dishboard</h2>
+    </div>
+    <div class="hidden md:grow"></div>
+    <div class="hidden md:flex flex-row items-center" style="padding: 0px 30px">
+        <div class="rounded-md bg-starlink-success" style="height: 25px; width: 25px;"></div>
+    </div>
+    <div class="hidden md:flex flex-row items-center" style="padding: 0px 30px">
+        <div class="rounded-md bg-starlink-lightgrey" style="height: 25px; width: 25px;"></div>
+    </div>
+    <div class="hidden md:flex flex-row items-center" style="padding: 0px 30px">
+        <div class="rounded-md bg-starlink-lightgrey" style="height: 25px; width: 25px;"></div>
+    </div>
+    <div class="hidden md:flex flex-row items-center" style="padding-left: 30px">
+        <p class="pr-5 text-white text-xl font-lighter space-1">Nila Dragon</p>
+    </div>
+    <div class="flex flex-row items-center">
+        <div class="rounded-full bg-starlink-lightgrey" style="height: 56px; width: 56px; box-shadow: 0 0 20px rgba(80, 80, 80, 0.73);"></div>
+    </div>
+</div>

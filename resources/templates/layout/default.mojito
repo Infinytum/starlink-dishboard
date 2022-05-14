@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starlink Dishboard</title>
+    <link rel="stylesheet" href="/assets/css/apexcharts.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                        "starlink-card": "#363636",
+                        "starlink-darkgrey": "#5D5D5D",
+                        "starlink-lightgrey": "#B2B2B2",
+                        "starlink-success": "#91D54E"
+                    },
+                    fontFamily: {
+                        'sans': ['Helvetica Neue'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .space-1 {
+            letter-spacing: 1px
+        }
+
+        .space-2 {
+            letter-spacing: 1px
+        }
+
+        .space-3 {
+            letter-spacing: 3px;
+        }
+
+        .space-4 {
+            letter-spacing: 3px;
+        }
+
+        .space-5 {
+            letter-spacing: 5px;
+        }
+    </style>
+</head>
+
+<body class="bg-stone-900" style="height: 100vh; max-height: 100vh; overflow: hidden;">
+    {{{subview}}}
+<script src="/assets/js/apexcharts.min.js"></script>
+<script>
+
+    var options = {
+        series: [{
+            data: [10, 41, 35, 51, 49, 62, 69, 91, 148, 10, 41, 35, 51, 49, 62, 69, 91, 148, 10, 41, 35, 51, 49, 62, 69, 91, 148, 10, 41, 35, 51, 49, 62, 69, 91, 148]
+        }, {
+            data: [10, 41, 35, 51, 49, 62, 69, 91, 148, 10, 41, 35, 51, 49, 62, 69, 91, 148, 10, 41, 35, 51, 49, 62, 69, 91, 148, 10, 41, 35, 51, 49, 62, 69, 91, 148].reverse()
+        }],
+        chart: {
+            id: 'realtime',
+            height: 350,
+            type: 'line',
+            animations: {
+                enabled: true,
+                easing: 'linear',
+                dynamicAnimation: {
+                    speed: 1000
+                }
+            },
+            toolbar: {
+                show: false
+            },
+            zoom: {
+                enabled: false
+            }
+        },
+        colors: ['#FFFFFF', '#5D5D5D'],
+        grid: {
+            show: false,
+            padding: {
+                left: -10,
+                right: -5,
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        markers: {
+            size: 0
+        },
+        legend: {
+            show: false
+        },
+        xaxis: {
+            labels: {
+                show: false
+            },
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: false
+            }
+        },
+        tooltip: {
+            enabled: false
+        },
+        yaxis: {
+            labels: {
+                show: false
+            },
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: false
+            }
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+</script>
+
+<script>
+
+    var options = {
+        series: [{
+            data: [10, 41, 35, 51, 49, 62, 69, 91, 148, 10, 41, 35, 51, 49, 62, 69, 91, 148, 10, 41, 35, 51, 49, 62, 69, 91, 148, 10, 41, 35, 51, 49, 62, 69, 91, 148]
+        }],
+        chart: {
+            id: 'realtime',
+            height: 80,
+            type: 'line',
+            animations: {
+                enabled: true,
+                easing: 'linear',
+                dynamicAnimation: {
+                    speed: 1000
+                }
+            },
+            toolbar: {
+                show: false
+            },
+            zoom: {
+                enabled: false
+            }
+        },
+        colors: ['#5D5D5D'],
+        grid: {
+            show: false,
+            padding: {
+                left: -10,
+                right: -5,
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        markers: {
+            size: 0
+        },
+        legend: {
+            show: false
+        },
+        xaxis: {
+            labels: {
+                show: false
+            },
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: false
+            }
+        },
+        tooltip: {
+            enabled: false
+        },
+        yaxis: {
+            labels: {
+                show: false
+            },
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: false
+            }
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#latencyChart"), options);
+    chart.render();
+</script>
+</body>
+
+</html>

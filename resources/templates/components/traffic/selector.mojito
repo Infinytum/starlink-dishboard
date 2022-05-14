@@ -1,0 +1,5 @@
+<div class="flex flex-row">
+    <p class="pl-5 text-white">Today</p>
+    <p class="pl-5 text-starlink-darkgrey">Last Week</p>
+    <p class="pl-5 text-starlink-darkgrey">Last Month</p>
+</div>
