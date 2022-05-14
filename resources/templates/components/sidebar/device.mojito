@@ -1,0 +1,11 @@
+<li class="flex py-2 justify-between">
+    <div class="flex items-center">
+        <img src="/assets/img/wireless.png" width="30" height="30" />
+        <span class="px-4 py-2 font-bold text-white">DragonBook Pro</span>
+    </div>
+
+    <div class="flex flex-col items-end">
+        <span class="text-sm text-green-500">Connected - 5GHz</span>
+        <span class="text-sm text-gray-400">Infinytum Networks</span>
+    </div>
+</li>

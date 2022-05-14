@@ -1,7 +1,9 @@
-<div class="flex flex-col bg-starlink-card rounded-2xl">
-    <div class="flex flex-row p-4">
-        <p class="font-bold text-white">Latency</p>
-        <p class="font-light pl-2 text-white">50ms</p>
-    </div>
-    <div id="latencyChart"></div>
+<div
+  class="flex flex-col col-span-2 md:col-span-1 bg-starlink-card rounded-2xl"
+>
+  <div class="flex flex-row p-4">
+    <p class="font-bold text-white">Latency</p>
+    <p class="font-light pl-2 text-white">50ms</p>
+  </div>
+  <div id="latencyChart"></div>
 </div>

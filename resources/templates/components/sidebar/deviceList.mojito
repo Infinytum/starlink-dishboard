@@ -1,0 +1,7 @@
+<ul>
+  {{>components/sidebar/device}}
+  <hr/>
+  {{>components/sidebar/device}}
+  <hr/>
+  {{>components/sidebar/device}}
+</ul>
