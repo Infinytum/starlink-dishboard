@@ -11,6 +11,7 @@ import (
 func main() {
 	mojito.GET("/", handler.View("dishboard"))
 	mojito.WithGroup("/ws", func(group router.Group) {
+		group.GET("/omnibus/:timeframe", handlers.Omnibus)
 		group.GET("/latency/:timeframe", handlers.Latency)
 		group.GET("/traffic/:timeframe", handlers.Traffic)
 	})
