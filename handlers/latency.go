@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"sort"
 	"strings"
 	"time"
 
@@ -41,10 +42,16 @@ func Latency(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 	ctx.EnableReadCheck()
 	// Send Ping History to pre-fill graph
 	if pings, err := sl.PingHistory(start, end); err == nil {
-		for time, ping := range pings {
+		keys := make([]int, 0)
+		for i := range pings {
+			keys = append(keys, int(i))
+		}
+		sort.Ints(keys)
+
+		for _, time := range keys {
 			ctx.Send(LatencyPacket{
-				Latency:   ping,
-				Timestamp: time,
+				Latency:   pings[int64(time)],
+				Timestamp: int64(time),
 			})
 		}
 	}

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"sort"
 	"strings"
 	"time"
 
@@ -42,12 +43,17 @@ func Traffic(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 	ctx.EnableReadCheck()
 	// Send Traffic History to pre-fill graph
 	if down, up, err := sl.TafficHistory(start, end); err == nil {
-		for timestamp, down := range down {
-			up := up[timestamp]
+		keys := make([]int, 0)
+		for i := range down {
+			keys = append(keys, int(i))
+		}
+		sort.Ints(keys)
+
+		for _, time := range keys {
 			ctx.Send(TrafficPacket{
-				Down:      down,
-				Up:        up,
-				Timestamp: timestamp,
+				Down:      down[int64(time)],
+				Up:        up[int64(time)],
+				Timestamp: int64(time),
 			})
 		}
 	}
