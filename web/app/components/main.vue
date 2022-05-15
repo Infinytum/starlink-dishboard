@@ -14,15 +14,15 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-    downloadStats: Map<string, number>;
-    uploadStats: Map<string, number>;
+    downloadStats: Map<Date, number>;
+    uploadStats: Map<Date, number>;
 }>();
 
 const keys = computed(() => {
     let k = [...props.downloadStats.keys()];
     let k2 = [];
     for (let i = 0; i < k.length; i++) {
-        k2.push(k[i].toString());
+        k2.push(k[i]);
     }
     return k2;
 });

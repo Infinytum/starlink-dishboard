@@ -7,19 +7,19 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-    downloadStats?: Map<string, number>;
-    uploadStats?: Map<string, number>;
+    downloadStats?: Map<Date, number>;
+    uploadStats?: Map<Date, number>;
 }>();
 
 var download = computed(() => {
-    if (!props.downloadStats) {
+    if (!props.downloadStats || props.downloadStats.size < 1) {
         return 0;
     }
     var values = [...props.downloadStats.values()];
     return values[values.length - 1];
 });
 var upload = computed(() => {
-    if (!props.uploadStats) {
+    if (!props.uploadStats || props.uploadStats.size < 1) {
         return 0;
     }
     var values = [...props.uploadStats.values()];

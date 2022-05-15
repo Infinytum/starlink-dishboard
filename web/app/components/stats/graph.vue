@@ -9,16 +9,17 @@
 </template>
 
 <script setup lang="ts">
+import "chartjs-adapter-date-fns";
 import { LineChart, useLineChart } from "vue-chart-3";
 import { ChartData, ChartOptions } from "chart.js";
 
 const props = defineProps<{
     title: string;
-    data: Map<string, number>;
+    data: Map<Date, number>;
 }>();
 
 const last = computed(() => {
-    if (!props.data) {
+    if (!props.data || props.data.size < 1) {
         return 0;
     }
     let values = Array.from(props.data.values());
@@ -26,12 +27,12 @@ const last = computed(() => {
 });
 
 const chartData = computed<ChartData<"line">>(() => ({
-    labels: Array.from(props.data?.keys()),
+    labels: Array.from(props.data.keys()),
     datasets: [
         {
-            data: Array.from(props.data?.values()),
+            data: Array.from(props.data.values()),
             borderColor: "#5D5D5D",
-            borderWidth: 5,
+            borderWidth: 3,
             pointRadius: 0,
             tension: 0.4,
         },
@@ -50,6 +51,7 @@ const options = computed<ChartOptions<"line">>(() => ({
     scales: {
         x: {
             display: false,
+            type: 'time',
         },
         y: {
             display: false,

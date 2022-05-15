@@ -22,7 +22,7 @@
 var show = ref(false);
 defineProps<{
     devices: any;
-    outages: Map<string, Map<string, number>>;
+    outages: Map<string, Map<Date, number>>;
 }>();
 
 function toggle() {

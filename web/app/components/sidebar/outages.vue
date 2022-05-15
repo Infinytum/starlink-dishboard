@@ -14,6 +14,6 @@
 
 <script setup lang="ts">
 defineProps<{
-    outages: Map<string, Map<string, number>>,
+    outages: Map<string, Map<Date, number>>,
 }>();
 </script>

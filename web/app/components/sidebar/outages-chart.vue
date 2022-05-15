@@ -3,17 +3,18 @@
 </template>
 
 <script setup lang="ts">
+import "chartjs-adapter-date-fns";
 import { BarChart, useBarChart } from "vue-chart-3";
 import { ChartData, ChartOptions } from "chart.js";
 
 const props = defineProps<{
-    outages: Map<string, Map<string, number>>,
+    outages: Map<string, Map<Date, number>>,
 }>();
 
 const chartData = computed<ChartData<"bar">>(() => {
     let labels = props.outages.size > 0 ? props.outages.values().next().value.keys() : [];
     let datasets = Array();
-    props.outages.forEach((data: Map<string, number>, name: string) => {
+    props.outages.forEach((data: Map<Date, number>, name: string) => {
         datasets.push({
             label: name,
             data: data.values(),
@@ -27,7 +28,6 @@ const chartData = computed<ChartData<"bar">>(() => {
         datasets: datasets,
     };
 });
-
 const options = computed<ChartOptions<"bar">>(() => ({
     type: "bar",
     responsive: true,
@@ -46,6 +46,7 @@ const options = computed<ChartOptions<"bar">>(() => ({
     scales: {
         x: {
             display: false,
+            type: "time",
         },
         y: {
             display: false,

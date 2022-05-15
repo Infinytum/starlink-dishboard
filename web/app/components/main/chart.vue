@@ -3,11 +3,12 @@
 </template>
 
 <script setup lang="ts">
+import "chartjs-adapter-date-fns";
 import { LineChart, useLineChart } from "vue-chart-3";
 import { ChartData, ChartOptions } from "chart.js";
 
 const props = defineProps<{
-    keys: string[];
+    keys: Date[];
     download: number[];
     upload: number[];
 }>();
@@ -19,7 +20,7 @@ const chartData = computed<ChartData<"line">>(() => ({
             label: "Download",
             data: props.download,
             borderColor: "#EFEFEF",
-            borderWidth: 5,
+            borderWidth: 4,
             pointRadius: 0,
             tension: 0.4,
         },
@@ -27,7 +28,7 @@ const chartData = computed<ChartData<"line">>(() => ({
             label: "Upload",
             data: props.upload,
             borderColor: "#5D5D5D",
-            borderWidth: 5,
+            borderWidth: 4,
             pointRadius: 0,
             tension: 0.4,
         },
@@ -39,13 +40,14 @@ const options = computed<ChartOptions<"line">>(() => ({
     interaction: {
         intersect: false,
     },
-    aspectRatio: 2,
+    aspectRatio: 1,
     animation: {
         duration: 0,
     },
     scales: {
         x: {
             display: false,
+            type: 'time',
         },
         y: {
             display: false,
