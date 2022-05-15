@@ -45,36 +45,30 @@ func Omnibus(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 
 	ctx.EnableReadCheck()
 	// Send Ping History to pre-fill graph
-	if pings, err := sl.PingHistory(start, end); err == nil {
-		keys := make([]int, 0)
-		for i := range pings {
-			keys = append(keys, int(i))
-		}
-		sort.Ints(keys)
-
-		for _, time := range keys {
-			ctx.Send(OmnibusPacket{
-				Latency:   pings[int64(time)],
-				Timestamp: int64(time),
-			})
-		}
+	pings, err := sl.PingHistory(start, end)
+	if err != nil {
+		return ctx.Send(OmnibusPacket{Error: err.Error()})
 	}
 
-	// Send Traffic History to pre-fill graph
-	if down, up, err := sl.TafficHistory(start, end); err == nil {
-		keys := make([]int, 0)
-		for i := range down {
-			keys = append(keys, int(i))
-		}
-		sort.Ints(keys)
+	keys := make([]int, 0)
+	for i := range pings {
+		keys = append(keys, int(i))
+	}
+	sort.Ints(keys)
 
-		for _, time := range keys {
-			ctx.Send(OmnibusPacket{
-				Down:      down[int64(time)],
-				Up:        up[int64(time)],
-				Timestamp: int64(time),
-			})
-		}
+	// Send Traffic History to pre-fill graph
+	down, up, err := sl.TafficHistory(start, end)
+	if err != nil {
+		return ctx.Send(OmnibusPacket{Error: err.Error()})
+	}
+
+	for _, time := range keys {
+		ctx.Send(OmnibusPacket{
+			Down:      down[int64(time)],
+			Latency:   pings[int64(time)],
+			Up:        up[int64(time)],
+			Timestamp: int64(time),
+		})
 	}
 
 	// Keep sending the latest ping to update graph every second
