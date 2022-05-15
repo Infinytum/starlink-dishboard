@@ -35,7 +35,7 @@ func Traffic(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 		end = time.Now()
 		refreshDuration = time.Hour
 	default:
-		start = time.Now().Add(-time.Second * 60)
+		start = time.Now().Add(-time.Minute * 120)
 		end = time.Now()
 		refreshDuration = time.Second
 	}
