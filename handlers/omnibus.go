@@ -10,8 +10,8 @@ import (
 )
 
 type ChartDataPoint struct {
-	Timestamp int64
-	Value     float64
+	Timestamp int64   `json:"timestamp"`
+	Value     float64 `json:"value"`
 }
 
 type OmnibusType string
