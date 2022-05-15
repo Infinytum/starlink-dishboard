@@ -16,7 +16,7 @@ func Traffic(ctx mojito.Context, sl *starlink.Service) {
 type LatencyPacket struct {
 	Error     string  `json:"error,omitempty"`
 	Latency   float64 `json:"latency,omitempty"`
-	Timestamp int64
+	Timestamp int64   `json:"timestamp,omitempty"`
 }
 
 // func LatencyWS(ctx mojito.WebSocketContext, sl *starlink.Service) error {
@@ -48,7 +48,7 @@ func Latency(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 		start = time.Now().Add(-time.Hour * 24 * 30)
 		end = time.Now()
 	default:
-		start = time.Now().Add(-time.Second * 900)
+		start = time.Now().Add(-time.Second * 60)
 		end = time.Now()
 	}
 
