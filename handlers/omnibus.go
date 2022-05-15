@@ -88,15 +88,15 @@ func Omnibus(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 		downPoints[i] = ChartDataPoint{Timestamp: int64(time), Value: down[int64(time)]}
 		latencyPoints[i] = ChartDataPoint{Timestamp: int64(time), Value: pings[int64(time)]}
 		upPoints[i] = ChartDataPoint{Timestamp: int64(time), Value: up[int64(time)]}
-		ctx.Send(OmnibusPacket{
-			Type: OmnibusInitial,
-			Data: OmnibusDataInit{
-				Down:    downPoints,
-				Latency: latencyPoints,
-				Up:      upPoints,
-			},
-		})
 	}
+	ctx.Send(OmnibusPacket{
+		Type: OmnibusInitial,
+		Data: OmnibusDataInit{
+			Down:    downPoints,
+			Latency: latencyPoints,
+			Up:      upPoints,
+		},
+	})
 
 	// Keep sending the latest ping to update graph every second
 	for !ctx.Closed() {
