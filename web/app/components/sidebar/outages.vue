@@ -8,12 +8,12 @@
                 <span class="bg-starlink-card px-4 text-gray-400">Outages</span>
             </div>
         </div>
-        <SidebarOutagesChart :keys="[...outages.keys()]" :values="[...outages.values()]" />
+        <SidebarOutagesChart :outages="outages" />
     </div>
 </template>
 
 <script setup lang="ts">
 defineProps<{
-    outages: Map<string, number>;
+    outages: Map<string, Map<string, number>>,
 }>();
 </script>

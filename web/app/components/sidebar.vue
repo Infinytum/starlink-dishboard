@@ -22,11 +22,10 @@
 var show = ref(false);
 defineProps<{
     devices: any;
-    outages: Map<string, number>;
+    outages: Map<string, Map<string, number>>;
 }>();
 
 function toggle() {
     show.value = !show.value;
-    console.log("Test");
 }
 </script>

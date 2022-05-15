@@ -1,7 +1,7 @@
 <template>
-    <div class="flex items-center w-full">
+    <div class="flex w-full items-center">
         <NavbarLogo />
-        <div class="hidden md:grow"></div>
+        <div class="grow"></div>
         <NavbarStatus />
     </div>
 </template>
