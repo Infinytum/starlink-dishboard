@@ -17,20 +17,25 @@ type LatencyPacket struct {
 func Latency(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 	timeframe := ctx.Request().ParamOrDefault("timeframe", "live")
 	var start, end time.Time
+	var refreshDuration time.Duration
 
 	switch strings.ToLower(timeframe) {
 	case "today":
 		start = time.Now().Add(-time.Hour * 24)
 		end = time.Now()
+		refreshDuration = time.Minute
 	case "week":
 		start = time.Now().Add(-time.Hour * 24 * 7)
 		end = time.Now()
+		refreshDuration = time.Minute * 30
 	case "month":
 		start = time.Now().Add(-time.Hour * 24 * 30)
 		end = time.Now()
+		refreshDuration = time.Hour
 	default:
 		start = time.Now().Add(-time.Second * 60)
 		end = time.Now()
+		refreshDuration = time.Second
 	}
 
 	ctx.EnableReadCheck()
@@ -46,7 +51,7 @@ func Latency(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 
 	// Keep sending the latest ping to update graph every second
 	for !ctx.Closed() {
-		<-time.After(time.Second)
+		<-time.After(refreshDuration)
 		ping, err := sl.Ping()
 		if err != nil {
 			return ctx.Send(LatencyPacket{Error: err.Error()})

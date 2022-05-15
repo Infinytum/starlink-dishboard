@@ -18,24 +18,29 @@ type TrafficPacket struct {
 func Traffic(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 	timeframe := ctx.Request().ParamOrDefault("timeframe", "live")
 	var start, end time.Time
+	var refreshDuration time.Duration
 
 	switch strings.ToLower(timeframe) {
 	case "today":
 		start = time.Now().Add(-time.Hour * 24)
 		end = time.Now()
+		refreshDuration = time.Minute
 	case "week":
 		start = time.Now().Add(-time.Hour * 24 * 7)
 		end = time.Now()
+		refreshDuration = time.Minute * 30
 	case "month":
 		start = time.Now().Add(-time.Hour * 24 * 30)
 		end = time.Now()
+		refreshDuration = time.Hour
 	default:
 		start = time.Now().Add(-time.Second * 60)
 		end = time.Now()
+		refreshDuration = time.Second
 	}
 
 	ctx.EnableReadCheck()
-	// Send Ping History to pre-fill graph
+	// Send Traffic History to pre-fill graph
 	if down, up, err := sl.TafficHistory(start, end); err == nil {
 		for timestamp, down := range down {
 			up := up[timestamp]
@@ -49,7 +54,7 @@ func Traffic(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 
 	// Keep sending the latest ping to update graph every second
 	for !ctx.Closed() {
-		<-time.After(time.Second)
+		<-time.After(refreshDuration)
 		down, up, err := sl.Traffic()
 		if err != nil {
 			return ctx.Send(TrafficPacket{Error: err.Error()})

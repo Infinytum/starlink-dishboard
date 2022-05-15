@@ -37,25 +37,6 @@ type Service struct {
 	storage tstorage.Storage
 }
 
-func (s *Service) startPollingLoop() {
-	go func() {
-		c := make(chan os.Signal, 1)
-		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
-		for {
-			select {
-			case <-time.After(time.Second):
-				s.pollDishy()
-			case <-c:
-				mojito.DefaultLogger().Info("Gracefully shutting down timeseries DB...")
-				s.stopped = true
-				s.storage.Close()
-				mojito.DefaultLogger().Info("Timeseries DB saved!")
-				os.Exit(0)
-			}
-		}
-	}()
-}
-
 func (s *Service) Ping() (float64, error) {
 	datapoints, err := s.storage.Select("latency", nil, time.Now().Add(-2*time.Second).Unix(), time.Now().Unix())
 	if err != nil {
@@ -139,6 +120,25 @@ func (s *Service) pollDishy() error {
 			DataPoint: tstorage.DataPoint{Timestamp: timestamp, Value: float64(statusResponse.DishGetStatus.UplinkThroughputBps)},
 		},
 	})
+}
+
+func (s *Service) startPollingLoop() {
+	go func() {
+		c := make(chan os.Signal, 1)
+		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+		for {
+			select {
+			case <-time.After(time.Second):
+				s.pollDishy()
+			case <-c:
+				mojito.DefaultLogger().Info("Gracefully shutting down timeseries DB...")
+				s.stopped = true
+				s.storage.Close()
+				mojito.DefaultLogger().Info("Timeseries DB saved!")
+				os.Exit(0)
+			}
+		}
+	}()
 }
 
 func NewService() (*Service, error) {
