@@ -9,14 +9,34 @@ import (
 	"github.com/infinytum/starlink-dishboard/pkg/starlink"
 )
 
+type ChartDataPoint struct {
+	Timestamp int64
+	Value     float64
+}
+
+type OmnibusType string
+
+const (
+	OmnibusInitial     OmnibusType = "INIT"
+	OmnibusChartUpdate OmnibusType = "CHART_UPDATE"
+)
+
 type OmnibusPacket struct {
-	Error     string        `json:"error,omitempty"`
-	Devices   []interface{} `json:"devices,omitempty"`
-	Down      float64       `json:"down,omitempty"`
-	Latency   float64       `json:"latency,omitempty"`
-	Outages   []interface{} `json:"outages,omitempty"`
-	Up        float64       `json:"up,omitempty"`
-	Timestamp int64         `json:"timestamp,omitempty"`
+	Error string      `json:"error,omitempty"`
+	Data  interface{} `json:"data,omitempty"`
+	Type  OmnibusType `json:"type,omitempty"`
+}
+
+type OmnibusDataInit struct {
+	Down    []ChartDataPoint `json:"down,omitempty"`
+	Latency []ChartDataPoint `json:"latency,omitempty"`
+	Up      []ChartDataPoint `json:"up,omitempty"`
+}
+
+type OmnibusDataChartUpdate struct {
+	Down    ChartDataPoint `json:"down,omitempty"`
+	Latency ChartDataPoint `json:"latency,omitempty"`
+	Up      ChartDataPoint `json:"up,omitempty"`
 }
 
 func Omnibus(ctx mojito.WebSocketContext, sl *starlink.Service) error {
@@ -44,8 +64,15 @@ func Omnibus(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 	}
 
 	ctx.EnableReadCheck()
+
 	// Send Ping History to pre-fill graph
 	pings, err := sl.PingHistory(start, end)
+	if err != nil {
+		return ctx.Send(OmnibusPacket{Error: err.Error()})
+	}
+
+	// Send Traffic History to pre-fill graph
+	down, up, err := sl.TafficHistory(start, end)
 	if err != nil {
 		return ctx.Send(OmnibusPacket{Error: err.Error()})
 	}
@@ -56,18 +83,18 @@ func Omnibus(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 	}
 	sort.Ints(keys)
 
-	// Send Traffic History to pre-fill graph
-	down, up, err := sl.TafficHistory(start, end)
-	if err != nil {
-		return ctx.Send(OmnibusPacket{Error: err.Error()})
-	}
-
-	for _, time := range keys {
+	downPoints, latencyPoints, upPoints := make([]ChartDataPoint, len(pings)), make([]ChartDataPoint, len(pings)), make([]ChartDataPoint, len(pings))
+	for i, time := range keys {
+		downPoints[i] = ChartDataPoint{Timestamp: int64(time), Value: down[int64(time)]}
+		latencyPoints[i] = ChartDataPoint{Timestamp: int64(time), Value: pings[int64(time)]}
+		upPoints[i] = ChartDataPoint{Timestamp: int64(time), Value: up[int64(time)]}
 		ctx.Send(OmnibusPacket{
-			Down:      down[int64(time)],
-			Latency:   pings[int64(time)],
-			Up:        up[int64(time)],
-			Timestamp: int64(time),
+			Type: OmnibusInitial,
+			Data: OmnibusDataInit{
+				Down:    downPoints,
+				Latency: latencyPoints,
+				Up:      upPoints,
+			},
 		})
 	}
 
@@ -82,11 +109,14 @@ func Omnibus(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 		if err != nil {
 			return ctx.Send(OmnibusPacket{Error: err.Error()})
 		}
+		timestamp := time.Now().Unix()
 		ctx.Send(OmnibusPacket{
-			Latency:   ping,
-			Down:      down,
-			Up:        up,
-			Timestamp: time.Now().Unix(),
+			Type: OmnibusChartUpdate,
+			Data: OmnibusDataChartUpdate{
+				Down:    ChartDataPoint{Timestamp: timestamp, Value: down},
+				Latency: ChartDataPoint{Timestamp: timestamp, Value: ping},
+				Up:      ChartDataPoint{Timestamp: timestamp, Value: up},
+			},
 		})
 	}
 	return nil
