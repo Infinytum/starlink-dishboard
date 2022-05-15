@@ -10,8 +10,9 @@ import (
 
 func main() {
 	mojito.GET("/", handler.View("dishboard"))
-	mojito.WithGroup("/api", func(group router.Group) {
+	mojito.WithGroup("/ws", func(group router.Group) {
 		group.GET("/latency/:timeframe", handlers.Latency)
+		group.GET("/traffic/:timeframe", handlers.Traffic)
 	})
 	handler.HandleAssets()
 	mojito.ListenAndServe(":8123")

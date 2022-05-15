@@ -76,38 +76,36 @@ func (s *Service) PingHistory(start, end time.Time) (map[int64]float64, error) {
 	return latencyMap, nil
 }
 
-func (s *Service) GetPingHistory() ([]float32, error) {
-	in := new(pb.Request)
-	in.Request = &pb.Request_GetHistory{}
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	// r is the gprc response
-	r, err := s.client.Handle(ctx, in)
+func (s *Service) Traffic() (float64, float64, error) {
+	downDatapoints, err := s.storage.Select("down", nil, time.Now().Add(-2*time.Second).Unix(), time.Now().Unix())
 	if err != nil {
-		return nil, err
+		return 0, 0, err
 	}
-
-	pingResponse := r.Response.(*pb.Response_DishGetHistory)
-	return pingResponse.DishGetHistory.PopPingLatencyMs, nil
+	upDatapoints, err := s.storage.Select("up", nil, time.Now().Add(-2*time.Second).Unix(), time.Now().Unix())
+	if err != nil {
+		return 0, 0, err
+	}
+	return downDatapoints[0].Value, upDatapoints[0].Value, nil
 }
 
-func (s *Service) GetTafficHistory() ([]float32, []float32, error) {
-	in := new(pb.Request)
-	in.Request = &pb.Request_GetHistory{}
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	// r is the gprc response
-	r, err := s.client.Handle(ctx, in)
+func (s *Service) TafficHistory(start, end time.Time) (map[int64]float64, map[int64]float64, error) {
+	downDatapoints, err := s.storage.Select("down", nil, start.Unix(), end.Unix())
 	if err != nil {
 		return nil, nil, err
 	}
-
-	pingResponse := r.Response.(*pb.Response_DishGetHistory)
-	return pingResponse.DishGetHistory.DownlinkThroughputBps, pingResponse.DishGetHistory.UplinkThroughputBps, nil
+	upDatapoints, err := s.storage.Select("up", nil, start.Unix(), end.Unix())
+	if err != nil {
+		return nil, nil, err
+	}
+	downMap := make(map[int64]float64)
+	upMap := make(map[int64]float64)
+	for _, datapoint := range downDatapoints {
+		downMap[datapoint.Timestamp] = datapoint.Value
+	}
+	for _, datapoint := range upDatapoints {
+		upMap[datapoint.Timestamp] = datapoint.Value
+	}
+	return downMap, upMap, nil
 }
 
 func (s *Service) pollDishy() error {

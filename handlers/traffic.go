@@ -8,13 +8,14 @@ import (
 	"github.com/infinytum/starlink-dishboard/pkg/starlink"
 )
 
-type LatencyPacket struct {
+type TrafficPacket struct {
 	Error     string  `json:"error,omitempty"`
-	Latency   float64 `json:"latency,omitempty"`
+	Down      float64 `json:"down,omitempty"`
+	Up        float64 `json:"up,omitempty"`
 	Timestamp int64   `json:"timestamp,omitempty"`
 }
 
-func Latency(ctx mojito.WebSocketContext, sl *starlink.Service) error {
+func Traffic(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 	timeframe := ctx.Request().ParamOrDefault("timeframe", "live")
 	var start, end time.Time
 
@@ -35,11 +36,13 @@ func Latency(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 
 	ctx.EnableReadCheck()
 	// Send Ping History to pre-fill graph
-	if pings, err := sl.PingHistory(start, end); err == nil {
-		for time, ping := range pings {
-			ctx.Send(LatencyPacket{
-				Latency:   ping,
-				Timestamp: time,
+	if down, up, err := sl.TafficHistory(start, end); err == nil {
+		for timestamp, down := range down {
+			up := up[timestamp]
+			ctx.Send(TrafficPacket{
+				Down:      down,
+				Up:        up,
+				Timestamp: timestamp,
 			})
 		}
 	}
@@ -47,11 +50,11 @@ func Latency(ctx mojito.WebSocketContext, sl *starlink.Service) error {
 	// Keep sending the latest ping to update graph every second
 	for !ctx.Closed() {
 		<-time.After(time.Second)
-		ping, err := sl.Ping()
+		down, up, err := sl.Traffic()
 		if err != nil {
-			return ctx.Send(LatencyPacket{Error: err.Error()})
+			return ctx.Send(TrafficPacket{Error: err.Error()})
 		}
-		ctx.Send(LatencyPacket{Latency: ping, Timestamp: time.Now().Unix()})
+		ctx.Send(TrafficPacket{Down: down, Up: up, Timestamp: time.Now().Unix()})
 	}
 	return nil
 }
