@@ -2,9 +2,9 @@
     <div class="col-span-2 flex flex-col rounded-2xl bg-starlink-card md:col-span-1">
         <div class="flex flex-row p-3 pb-0 md:p-4">
             <p class="font-bold text-white">{{ title }}</p>
-            <p class="pl-2 font-light text-white">{{ values[values.length - 1].toFixed(2) }}ms</p>
+            <p v-if="data" class="pl-2 font-light text-white">{{ last.toFixed(2) }}ms</p>
         </div>
-        <LineChart v-bind="lineChartProps" />
+        <LineChart v-if="data" v-bind="lineChartProps" />
     </div>
 </template>
 
@@ -14,15 +14,22 @@ import { ChartData, ChartOptions } from "chart.js";
 
 const props = defineProps<{
     title: string;
-    keys: string[];
-    values: number[];
+    data: Map<string, number>;
 }>();
 
+const last = computed(() => {
+    if (!props.data) {
+        return 0;
+    }
+    let values = Array.from(props.data.values());
+    return values[values.length - 1];
+});
+
 const chartData = computed<ChartData<"line">>(() => ({
-    labels: props.keys,
+    labels: Array.from(props.data?.keys()),
     datasets: [
         {
-            data: props.values,
+            data: Array.from(props.data?.values()),
             borderColor: "#5D5D5D",
             borderWidth: 5,
             pointRadius: 0,

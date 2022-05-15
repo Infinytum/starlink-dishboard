@@ -6,19 +6,23 @@
         "start": "node .output/server/index.mjs"
     },
     "devDependencies": {
-        "@nuxtjs/tailwindcss": "^5.0.2",
-        "nuxt3": "3.0.0-27470397.9ebea90",
-        "prettier": "^2.6.1",
-        "prettier-plugin-tailwindcss": "^0.1.8"
+        "@nuxtjs/tailwindcss": "5.0.4",
+        "nuxt": "npm:nuxt3@latest",
+        "prettier": "2.6.2",
+        "prettier-plugin-tailwindcss": "0.1.10"
     },
     "dependencies": {
-        "@headlessui/vue": "1.5.0",
+        "ufo": "^0.8.4",
+        "@headlessui/vue": "1.6.1",
         "@heroicons/vue": "1.0.6",
         "@tailwindcss/aspect-ratio": "0.4.0",
-        "@tailwindcss/forms": "0.5.0",
-        "@tailwindcss/line-clamp": "0.3.1",
+        "@tailwindcss/forms": "0.5.1",
+        "@tailwindcss/line-clamp": "0.4.0",
         "@tailwindcss/typography": "0.5.2",
-        "chart.js": "^3.7.1",
-        "vue-chart-3": "^3.1.8"
+        "chart.js": "3.7.1",
+        "vue-chart-3": "3.1.8"
+    },
+    "overrides": {
+        "ufo": "^0.8.4"
     }
 }

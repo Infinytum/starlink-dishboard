@@ -1,5 +1,5 @@
 <template>
-    <LineChart v-bind="lineChartProps" />
+    <LineChart :chartData="chartData" :options="options" />
 </template>
 
 <script setup lang="ts">
@@ -16,6 +16,7 @@ const chartData = computed<ChartData<"line">>(() => ({
     labels: props.keys,
     datasets: [
         {
+            label: "Download",
             data: props.download,
             borderColor: "#EFEFEF",
             borderWidth: 5,
@@ -23,6 +24,7 @@ const chartData = computed<ChartData<"line">>(() => ({
             tension: 0.4,
         },
         {
+            label: "Upload",
             data: props.upload,
             borderColor: "#5D5D5D",
             borderWidth: 5,
