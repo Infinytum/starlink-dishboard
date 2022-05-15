@@ -1,7 +1,13 @@
 <ul>
-  {{>components/sidebar/device}}
+  {{>components/sidebar/deviceListItem}}
   <hr/>
-  {{>components/sidebar/device}}
+  {{>components/sidebar/deviceListItem}}
   <hr/>
-  {{>components/sidebar/device}}
+  {{>components/sidebar/deviceListItem}}
+  <hr/>
+  {{>components/sidebar/deviceListItem}}
+  <hr/>
+  {{>components/sidebar/deviceListItem}}
+  <hr/>
+  {{>components/sidebar/deviceListItem}}
 </ul>

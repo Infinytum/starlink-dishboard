@@ -9,15 +9,15 @@
         <div class="rounded-md bg-starlink-success" style="height: 25px; width: 25px;"></div>
     </div>
     <div class="hidden md:flex flex-row items-center" style="padding: 0px 30px">
-        <div class="rounded-md bg-starlink-lightgrey" style="height: 25px; width: 25px;"></div>
+        <div class="rounded-md bg-starlink-lightgray" style="height: 25px; width: 25px;"></div>
     </div>
     <div class="hidden md:flex flex-row items-center" style="padding: 0px 30px">
-        <div class="rounded-md bg-starlink-lightgrey" style="height: 25px; width: 25px;"></div>
+        <div class="rounded-md bg-starlink-lightgray" style="height: 25px; width: 25px;"></div>
     </div>
     <div class="hidden md:flex flex-row items-center" style="padding-left: 30px">
         <p class="pr-5 text-white text-xl font-lighter space-1">Nila Dragon</p>
     </div>
     <div class="flex flex-row items-center">
-        <div class="rounded-full bg-starlink-lightgrey" style="height: 56px; width: 56px; box-shadow: 0 0 20px rgba(80, 80, 80, 0.73);"></div>
+        <div class="rounded-full bg-starlink-lightgray" style="height: 56px; width: 56px; box-shadow: 0 0 20px rgba(80, 80, 80, 0.73);"></div>
     </div>
 </div>

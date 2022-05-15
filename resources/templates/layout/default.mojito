@@ -15,8 +15,8 @@
                     colors: {
                         clifford: '#da373d',
                         "starlink-card": "#363636",
-                        "starlink-darkgrey": "#5D5D5D",
-                        "starlink-lightgrey": "#B2B2B2",
+                        "starlink-darkgray": "#5D5D5D",
+                        "starlink-lightgray": "#B2B2B2",
                         "starlink-success": "#91D54E"
                     },
                     fontFamily: {

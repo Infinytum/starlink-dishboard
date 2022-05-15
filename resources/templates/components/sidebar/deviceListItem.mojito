@@ -4,8 +4,8 @@
         <span class="px-4 py-2 font-bold text-white">DragonBook Pro</span>
     </div>
 
-    <div class="flex flex-col items-end">
+    <div class="flex flex-col items-end content-center">
         <span class="text-sm text-green-500">Connected - 5GHz</span>
-        <span class="text-sm text-gray-400">Infinytum Networks</span>
+        <span class="text-xs text-gray-400">Infinytum Networks</span>
     </div>
 </li>
