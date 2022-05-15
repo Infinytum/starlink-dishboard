@@ -80,27 +80,10 @@ func (s *Service) TafficHistory(start, end time.Time) (map[int64]float64, map[in
 	}
 	downMap := make(map[int64]float64)
 	upMap := make(map[int64]float64)
-	diff := end.Sub(start)
-	modulo := 60
-	if diff.Hours() < 24*7 {
-		modulo = 30
-	}
-	if diff.Hours() < 1 {
-		modulo = 15
-	}
-	if diff.Minutes() < 1 {
-		modulo = 1
-	}
-	for i, datapoint := range downDatapoints {
-		if i%modulo != 0 {
-			continue
-		}
+	for _, datapoint := range downDatapoints {
 		downMap[datapoint.Timestamp] = datapoint.Value
 	}
-	for i, datapoint := range upDatapoints {
-		if i%modulo != 0 {
-			continue
-		}
+	for _, datapoint := range upDatapoints {
 		upMap[datapoint.Timestamp] = datapoint.Value
 	}
 	return downMap, upMap, nil
