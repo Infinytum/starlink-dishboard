@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/go-mojito/defaults v0.0.0-20220506234926-00e64ec6f8ee
-	github.com/go-mojito/mojito v0.0.7-0.20220515015715-136266d90da1
+	github.com/go-mojito/mojito v0.0.7-0.20220515194820-50820949f5c2
 	github.com/go-mojito/router-fasthttp v0.0.0-20220515015012-9c822400cf10
 	github.com/gogo/protobuf v1.3.2
 	github.com/starlink-community/starlink-grpc-go v0.0.0-20210211202449-2e89f3d7e309

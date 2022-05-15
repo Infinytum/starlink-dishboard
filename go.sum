@@ -38,6 +38,10 @@ github.com/go-mojito/mojito v0.0.7-0.20220515002640-fdef39401124 h1:ez+AeP9TJW+T
 github.com/go-mojito/mojito v0.0.7-0.20220515002640-fdef39401124/go.mod h1:wlvWtoiJqc5VhFh4JCD6Ivqt1Md+5ZDFvvl+abhVI3k=
 github.com/go-mojito/mojito v0.0.7-0.20220515015715-136266d90da1 h1:7sKpdFRpVcA4Ltn2pJwWVHX2gfcjM/5Fhimz+Vrkei4=
 github.com/go-mojito/mojito v0.0.7-0.20220515015715-136266d90da1/go.mod h1:wlvWtoiJqc5VhFh4JCD6Ivqt1Md+5ZDFvvl+abhVI3k=
+github.com/go-mojito/mojito v0.0.7-0.20220515015900-791df2596525 h1:m2TpvOVnqejvxoUqAXTMGOtfYZmxSpF3050yDPIlHfw=
+github.com/go-mojito/mojito v0.0.7-0.20220515015900-791df2596525/go.mod h1:wlvWtoiJqc5VhFh4JCD6Ivqt1Md+5ZDFvvl+abhVI3k=
+github.com/go-mojito/mojito v0.0.7-0.20220515194820-50820949f5c2 h1:Q8jonhKyZxFrKXC8+JKWT0MFQMJGGGgsNvgY4Yj1m+I=
+github.com/go-mojito/mojito v0.0.7-0.20220515194820-50820949f5c2/go.mod h1:wlvWtoiJqc5VhFh4JCD6Ivqt1Md+5ZDFvvl+abhVI3k=
 github.com/go-mojito/router-fasthttp v0.0.0-20220506002241-437af4117a40 h1:7iue3M/t8Rt1FoJlbmIT9pk3yLykN9V4Dj39ZSCljY8=
 github.com/go-mojito/router-fasthttp v0.0.0-20220506002241-437af4117a40/go.mod h1:UNhVSBmsmvr2SC4GJzjF2BSKnI/q4HdXgU9Q2yn2vDk=
 github.com/go-mojito/router-fasthttp v0.0.0-20220515015012-9c822400cf10 h1:R/ltMyNxnR1Q+MF3aRu369OEzHXTqQq3Ak2X+EBtK4o=
