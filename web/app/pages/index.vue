@@ -39,7 +39,11 @@ function addPoint(map: Map<Date, number>, timestamp: Date, value: number) {
 }
 
 function connectWS() {
-    let ws = new WebSocket("ws://192.168.11.124:8123/ws/omnibus/live");
+    let schema = "ws";
+    if (window.location.protocol === "https:") {
+        schema = "wss";
+    }
+    let ws = new WebSocket(schema + "://"+ window.location.host + "/ws/omnibus/live");
     ws.onopen = () => {
         status.value.ws = "online";
     };
