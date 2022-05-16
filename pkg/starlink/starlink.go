@@ -129,7 +129,7 @@ func (s *Service) startPollingLoop() {
 		for {
 			select {
 			case <-time.After(time.Second):
-				s.pollDishy()
+				go s.pollDishy()
 			case <-c:
 				mojito.DefaultLogger().Info("Gracefully shutting down timeseries DB...")
 				s.stopped = true
